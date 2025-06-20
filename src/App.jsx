@@ -12,11 +12,11 @@ function App() {
     setMode((prev) => (prev === "dark" ? "light" : "dark"));
     document.documentElement.setAttribute('data-theme', mode );
   };
-
+const [menu, setMenu] = useState(false);
 
   return (
     <>
-    <Barra/>
+    <Barra menu={menu} colapso={() => setMenu(!menu)} />
       <button type="button" onClick={()=>toggleMode()} >
         {
           mode=== "dark" && (

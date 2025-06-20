@@ -135,19 +135,6 @@ body {
   color: var(--text-950);
 }
 
-.barra {
-  background-color: var( --accent-600);
-  width: 20%;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-}
-.barra-menu{
-  background-color: var(--primary-800);
-  width: 50%;
-  height: 8%;
-}
 
 
 
