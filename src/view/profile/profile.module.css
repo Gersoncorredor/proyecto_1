@@ -1,0 +1,17 @@
+.profile {
+ display: flex;
+
+}
+.iconProfile {
+  border: 1px solid #000;
+  border-radius: 100%;
+  position: relative;
+  height: 400px;
+  width: 400px;
+  display: grid;
+  place-items: center;
+
+  svg {
+    margin-left: 25px;
+  }
+}

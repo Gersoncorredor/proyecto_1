@@ -1,0 +1,44 @@
+.modal {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background-color: rgba(131, 131, 131, 0.356);
+}
+
+.modalHidden {
+  display: none;
+}
+
+.modalContent {
+  z-index: 10;
+  padding: 2%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: left;
+  border-radius: 2%;
+  width: 50%;
+  max-height: 550px;
+  background-color: var(--background-600);
+}
+.modalBoton {
+  cursor: pointer;
+}
+
+.modalBody{
+   padding: 5%; 
+}
+
+.inputGroup {
+  display: grid;
+  width: 85%;
+  padding: 1%;
+  grid-template-columns: 1fr 6fr;
+}
+
+.modalFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: 2%;
+}

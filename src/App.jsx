@@ -1,38 +1,20 @@
-import { useState } from "react";
-import { Eclipse, SunMoon} from "lucide-react";
-import "./App.css";
-import Barra from "./components/barra";
-
-
-
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Barra from './components/barra/barra.jsx';
+import Home from './view/home/home.view.jsx';
+import Profile from './view/profile/profile.view.jsx';
 
 function App() {
-  const [mode, setMode] = useState(window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-  const toggleMode = () => {
-    setMode((prev) => (prev === "dark" ? "light" : "dark"));
-    document.documentElement.setAttribute('data-theme', mode );
-  };
-const [menu, setMenu] = useState(false);
-
   return (
-    <>
-    <Barra menu={menu} colapso={() => setMenu(!menu)} />
-      <button type="button" onClick={()=>toggleMode()} >
-        {
-          mode=== "dark" && (
-            <Eclipse/>
-          )
-          
-
-        }
-        {
-          mode=== "light" && (
-            <SunMoon/>
-          )
-        }
-      </button>
-
-    </>
+    <Router> 
+      <Barra /> 
+      <div className="app">
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/perfil" element={<Profile />} />
+      </Routes>
+      </div>
+    </Router>
   );
 }
 
