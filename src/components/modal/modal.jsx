@@ -18,7 +18,7 @@ const Modal = () => {
   };
   return (
     <>
-      <button onClick={() => setActive(true)}>Abrir modal</button>
+      <button className={styles.modalBoton} onClick={() => setActive(true)}>Abrir modal</button>
       <div
         className={active ? styles.modal : styles.modalHidden}
         onClick={(e) => {

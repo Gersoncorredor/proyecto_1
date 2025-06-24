@@ -1,28 +1,32 @@
 import "../../App.css";
-import { UserRoundPen } from "lucide-react";
+import { Construction, UserRoundPen } from "lucide-react";
 import styles from "./profile.module.css";
 import Modal from "../../components/modal/modal.jsx";
-import { useState } from "react";
-import Image from "../../assets/id1.jpg"
-
+import { useState, useEffect } from "react";
 
 function Profile() {
   const [imagePreview, setImagePreview] = useState(null);
-console.log(imagePreview)
+
+  useEffect(() => {
+    setImagePreview("../../../public/Avatares/id1.jpg");
+  }, []);
+
   return (
-    <div className="app">
-      <div className={styles.Profile}>
-        <h1>Perfil</h1>
+    <div className={styles.profileContainer}>
+      <h1>Perfil</h1>
+      <div className={styles.profile}>
         <div className={styles.iconProfile}>
-        {!imagePreview ? 
-         <img src={"../../assets/id1.jpg"} alt="Preview" />:   
-
-
-         <UserRoundPen size={"300px"} />
-         }
+          {imagePreview ?
+            (<img className={styles.iconImagen} src={imagePreview} alt="Preview" />)
+            : (<UserRoundPen size={100} />)}
         </div>
-        <Modal />
-        <div></div>
+        <div className={styles.profileContent}>
+          <h2>Contenido</h2>
+          <p>
+            contenido
+          </p>
+          <Modal />
+        </div>
       </div>
     </div>
   );

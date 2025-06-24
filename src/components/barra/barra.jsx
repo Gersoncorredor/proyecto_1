@@ -12,7 +12,7 @@ import {
 
 const Barra = () => {
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [mode, setMode] = useState(
     window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
   );
@@ -34,19 +34,22 @@ const Barra = () => {
       <div>
         {!menu && <h1>Menu</h1>}
 
-        <button onClick={()=>navigate("/")}  className={styles.barraMenu} >
+        <button onClick={() => navigate("/")} className={styles.barraMenu} >
           <House />
           {!menu && "Inicio"}
         </button>
-        <button onClick={()=>navigate("/perfil")} className={styles.barraMenu} >
+        <button onClick={() => navigate("/perfil")} className={styles.barraMenu} >
           <CircleUser />
           {!menu && " Acerca de"}
         </button>
-        <button onClick={()=>navigate("/login")} className={styles.barraMenu} >
+      </div>
+      <div className={styles.barraFooter}>
+
+        <button onClick={() => navigate("/login")} className={styles.barraMenu} >
           <LogOut />
           {!menu && " Cerrar sesión"}
         </button>
-        <button type="button" onClick={() => toggleMode()}>
+        <button className={styles.barraMenu} type="button" onClick={() => toggleMode()}>
           {mode === "dark" && <Eclipse />}
           {mode === "light" && <SunMoon />}
         </button>
