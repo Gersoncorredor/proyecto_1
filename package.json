@@ -10,6 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fullcalendar/common": "^5.11.5",
+    "@fullcalendar/core": "^6.1.17",
+    "@fullcalendar/daygrid": "^6.1.17",
+    "@fullcalendar/interaction": "^6.1.17",
     "lucide-react": "^0.517.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

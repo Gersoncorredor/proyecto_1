@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./barra.module.css";
 import { Link, useNavigate } from "react-router-dom";
+import { Thema } from "./thema/thema";
 import {
   Menu,
   House,
@@ -13,16 +14,7 @@ import {
 const Barra = () => {
 
   const navigate = useNavigate();
-  const [mode, setMode] = useState(
-    window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
-  );
-  const toggleMode = () => {
-    setMode((prev) => {
-      const newmode = prev === "dark" ? "light" : "dark";
-      document.documentElement.setAttribute("data-theme", newmode);
-      return newmode;
-    });
-  };
+  
   const [menu, setMenu] = useState(true);
 
   return (
@@ -49,10 +41,7 @@ const Barra = () => {
           <LogOut />
           {!menu && " Cerrar sesión"}
         </button>
-        <button className={styles.barraMenu} type="button" onClick={() => toggleMode()}>
-          {mode === "dark" && <Eclipse />}
-          {mode === "light" && <SunMoon />}
-        </button>
+        <Thema />
       </div>
     </div>
   );

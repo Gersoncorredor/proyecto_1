@@ -124,7 +124,6 @@
 body {
   background-color: var(--background-50);
   color: var(--text-950);
-  overflow-y: hidden;
 }
 
 .card {
@@ -143,3 +142,9 @@ body {
   display: flex;
   overflow: hidden;
 }
+
+.fc {
+  font-family: Arial, sans-serif;
+  background-color: var(--background-50);
+}
+

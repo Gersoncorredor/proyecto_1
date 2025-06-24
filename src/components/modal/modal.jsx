@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styles from "./modal.module.css";
 
-const Modal = () => {
-  const [active, setActive] = useState(false);
+const Modal = (open) => {
+  const [active, setActive] = useState(open);
   const [formData, setFormData] = useState({
     name: "",
     lastName: "",
