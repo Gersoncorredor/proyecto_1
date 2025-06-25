@@ -1,8 +1,7 @@
-.homeCalendar{
-    .app:has(.barra.expandida) & {
-        width: calc(100vw - 50px);
-    }
-    width: calc(100vw - 250px);
-     height: 600px;
+.homeCalendar {
+  width: calc(100vw - 250px);
+  height: 600px;
+  .app:has(.barra.expandida) & {
+    width: calc(100vw - 50px);
+  }
 }
-

@@ -7,7 +7,6 @@
   height: 100vh;
 }
 
-
 .profile {
   display: flex;
   align-items: center;
@@ -36,4 +35,49 @@
   height: 80%;
   object-fit: cover;
   margin-left: 42px;
+}
+
+.inputGroup {
+  position: relative;
+  margin: 10px;
+
+  input {
+    width: 300px;
+    height: 32px;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    position: relative;
+
+    background: linear-gradient(90deg, var(--primary-800), var(--primary-800))
+        center bottom/0 3px no-repeat,
+      linear-gradient(90deg, var(--primary-300), var(--primary-400)) center
+        bottom/100% 3px no-repeat;
+
+    transition: background-size 0.5s ease-in-out;
+  }
+
+  span {
+    position: absolute;
+    left: 0px;
+    top: 0;
+    font-size: 20px;
+    font-weight: 700;
+    pointer-events: none;
+    transition: all 0.3s;
+    opacity: 0.5;
+    color: var(--text-950);
+  }
+
+  input:focus + span,
+  input:valid + span {
+    transform: translate(0, -32px);
+    font-size: 16px;
+    opacity: 1;
+    
+  }
+
+  input:focus {
+    background-size: 100% 3px, 100% 3px, 100%;
+  }
 }

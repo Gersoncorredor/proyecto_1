@@ -1,0 +1,7 @@
+css de un boton de selecionar horarios        
+             cursor: "pointer",
+              backgroundColor: idHorario === horario.id ? "#4CAF50" : "#f0f0f0",
+              color: idHorario === horario.id ? "white" : "black",
+              padding: "0.5rem 1rem",
+              border: "1px solid #ccc",
+              borderRadius: "5px",
