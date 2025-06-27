@@ -38,11 +38,30 @@ const SeleccionarHorario = () => {
     };
     return (
       <>
-      Tipo de Consulta:
-      <Select options={consulta} onChange={handleChange} />
+        Tipo de Consulta:
+        <Select options={consulta} onChange={handleChange} />
       </>
     );
   };
+
+  const TipoOftalmologo = () => {
+    const consulta = [
+      { value: 1, label: "Dr. Juan" },
+      { value: 2, label: "Dra. Maria" },
+      { value: 3, label: "Dr. Pedro" },
+    ];
+    const handleChange = (selectedOption) => {
+      console.log("nombre selecionado:", selectedOption);
+    };
+
+    return (
+      <>
+        Tipo de Oftalmologo:
+        <Select options={consulta} onChange={handleChange} />
+      </>
+    );
+  };
+
   return (
     <>
       <div className={styles.SHcontainer}>
@@ -74,6 +93,9 @@ const SeleccionarHorario = () => {
         <p>Por favor selecciona una hora</p>
       )}
       <TipoConsulta />
+      <TipoOftalmologo />
+
+      <button>Agendar</button>
     </>
   );
 };

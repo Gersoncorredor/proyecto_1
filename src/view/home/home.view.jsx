@@ -1,39 +1,16 @@
 import "../../App.css";
-import styles from "./home.module.css";
 import "@fullcalendar/common/main.css";
-import { Calendar } from "@fullcalendar/core";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import interactionPlugin from "@fullcalendar/interaction";
-import { useRef, useEffect, useState } from "react";
+import styles from "./home.module.css";
+import { useEffect, useState } from "react";
 import Modal, { useModal } from "../../components/modal/index";
 import SeleccionarHorario from "../../components/seleccionarHorarios/seleccionarHorarios.jsx";
+import Calendario from "../../components/calendario/calendario.jsx";
 
 function Home() {
-  const calendarEl = useRef(null);
   const { open, onClose, onOpen } = useModal();
   const [formData, setFormData] = useState({
     fecha: "",
   });
-
-  const today = new Date();
-  const formatDate = (date) => date.toISOString().split("T")[0];
-  //calendario
-  useEffect(() => {
-    const calendar = new Calendar(calendarEl.current, {
-      locale: "es",
-      selectable: true,
-      plugins: [dayGridPlugin, interactionPlugin],
-      initialView: "dayGridMonth",
-      validRange: {
-        start: formatDate(today),
-      },
-
-      select: function (info) {
-        handleSelect(info);
-      },
-    });
-    calendar.render();
-  }, []);
 
   const handleSelect = (info) => {
     setFormData({
@@ -43,16 +20,13 @@ function Home() {
   };
 
   return (
-    <div className="app">
-      <div className="home">
-        <div className={styles.homeCalendar} ref={calendarEl} />
-        <Modal open={open} onClose={onClose}>
-          <h2>Agendar</h2>
-          <strong>Fecha: {formData.fecha}</strong>
-          <SeleccionarHorario />
-          
-        </Modal>
-      </div>
+    <div className={styles.home}>
+      <Calendario handleSelect={handleSelect} />
+      <Modal isOpen={open} onClose={onClose} className={styles.modalHome}>
+        <h2>Agendar</h2>
+        <strong>Fecha: {formData.fecha}</strong>
+        <SeleccionarHorario />
+      </Modal>
     </div>
   );
 }

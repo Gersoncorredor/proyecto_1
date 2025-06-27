@@ -1,0 +1,33 @@
+.C-calendario {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+}
+.fc {
+  padding: 1rem;
+  border-radius: 4%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-family: "Times New Roman", Times, serif;
+  background-color: var(--background-500);
+}
+
+.fc .fc-button-primary {
+  background-color: var(--background-500);
+}
+.fc-col-header {
+  background-color: var(--primary-900);
+  a {
+    color: var(--text-50);
+  }
+}
+.fc-daygrid-day-number {
+  color: black;
+  font-weight: bold;
+}
+.fc-daygrid-day-frame {
+  background-color: var(--background-600);
+}
+
+.fc-daygrid-day-events {
+  display: none;
+}

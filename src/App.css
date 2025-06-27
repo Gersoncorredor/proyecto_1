@@ -121,7 +121,7 @@
   --accent-950: #ecf8f3;
 }
 
-body {
+body,html,#root  {
   background-color: var(--background-50);
   color: var(--text-950);
 }
@@ -141,10 +141,5 @@ body {
   height: 100vh;
   display: flex;
   overflow: hidden;
-}
-
-.fc {
-  font-family: Arial, sans-serif;
-  background-color: var(--background-50);
 }
 

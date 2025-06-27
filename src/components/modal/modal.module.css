@@ -1,32 +1,32 @@
-.modal {
+.modalOverlay {
   position: fixed;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  background-color: rgba(131, 131, 131, 0.356);
-  z-index: 11;
-  backdrop-filter: blur(2px);
-}
-
-.modalHidden {
-  display: none;
+  display: flex;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 99;
 }
 
 .modalContent {
-  padding: 2%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  border-radius: 2%;
-  gap: 10px;
-  width: 50%;
-  max-height: 550px;
-  background-color: var(--background-600);
-}
-.modalBoton {
-  cursor: pointer;
+  position: relative;
+  padding: 20px;
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
+  width: 600px;
 }
 
-.modalBody {
-  padding: 5%;
+form {
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background-100);
+}
+
+.modalHome {
+  position: fixed;
+  right: 0;
+  top: 0;
+  display: flex;
 }

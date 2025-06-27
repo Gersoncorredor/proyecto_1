@@ -45,7 +45,7 @@ function Profile() {
           <h2>Contenido</h2>
           <p>contenido</p>
           <button onClick={onOpen}>Editar</button>
-          <Modal title="PERFIL" open={open} onClose={onClose}>
+          <Modal isOpen={open} onClose={onClose}>
             <h2>Editar perfil</h2>
 
             <label htmlFor="name" className={styles.inputGroup}>

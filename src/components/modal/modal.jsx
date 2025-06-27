@@ -1,22 +1,24 @@
 import React, { useState } from "react";
 import styles from "./modal.module.css";
 
-const Modal = ({ open, onClose, children, title }) => {
+const Modal = ({ isOpen, onClose, children, className }) => {
+  if (!isOpen) return null;
+
+  const handleClickOutside = (e) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
   return (
-    <>
-      <div
-        className={open ? styles.modal : styles.modalHidden}
-        onClick={(e) => {
-          if (e.target === e.currentTarget) {
-            onClose();
-          }
-        }}
+    <div className={styles.modalOverlay} onClick={handleClickOutside}>
+      <form
+        method="POST"
+        className={`${styles.modalContent} ${className}`}
+        onClick={(e) => e.stopPropagation()}
       >
-        <form method="POST" className={styles.modalContent}>
-          {children}
-        </form>
-      </div>
-    </>
+        {children}
+      </form>
+    </div>
   );
 };
 
