@@ -1,7 +1,6 @@
-import React, { useState } from "react";
 import styles from "./modal.module.css";
 
-const Modal = ({ isOpen, onClose, children, className }) => {
+const Modal = ({ isOpen, onClose, children, className = "" }) => {
   if (!isOpen) return null;
 
   const handleClickOutside = (e) => {

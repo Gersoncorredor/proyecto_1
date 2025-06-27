@@ -25,11 +25,15 @@ const Barra = () => {
       </button>
       <div>
         {!menu && <h1>Menu</h1>}
-
         <button onClick={() => navigate("/")} className={styles.barraMenu} >
           <House />
           {!menu && "Inicio"}
         </button>
+        <button onClick={() => navigate("/citas")} className={styles.barraMenu} >
+          <House />
+          {!menu && "Citas"}
+        </button>
+
         <button onClick={() => navigate("/perfil")} className={styles.barraMenu} >
           <CircleUser />
           {!menu && " Acerca de"}

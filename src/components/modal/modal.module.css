@@ -1,32 +1,28 @@
 .modalOverlay {
   position: fixed;
-  display: flex;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background-color: rgba(0, 0, 0, 0.2);
   z-index: 99;
+  display: flex;
 }
 
 .modalContent {
-  position: relative;
+  position: absolute;
+  background-color: var(--background-100);
   padding: 20px;
   border-radius: 10px;
   transition: transform 0.3s ease-in-out;
-  width: 600px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
-form {
-  gap: 10px;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--background-100);
-}
 
 .modalHome {
-  position: fixed;
-  right: 0;
-  top: 0;
-  display: flex;
+  transform: translate(0);
 }
+
+
+

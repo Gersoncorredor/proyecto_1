@@ -12,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/perfil" element={<Profile />} />
+        <Route path="/citas" element={<Profile />} />
       </Routes>
       </div>
     </Router>
