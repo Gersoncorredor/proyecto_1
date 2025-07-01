@@ -3,12 +3,14 @@
   inset: 0;
   background-color: rgba(0, 0, 0, 0.2);
   z-index: 99;
+  align-items: center;
+  justify-content: center;
   display: flex;
 }
 
 .modalContent {
   position: absolute;
-  background-color: var(--background-100);
+  background-color: var(--background-300);
   padding: 20px;
   border-radius: 10px;
   transition: transform 0.3s ease-in-out;
@@ -20,9 +22,7 @@
 }
 
 
-.modalHome {
-  transform: translate(0);
-}
+
 
 
 

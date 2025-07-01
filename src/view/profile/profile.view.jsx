@@ -1,18 +1,20 @@
 import "../../App.css";
 import { UserRoundPen } from "lucide-react";
 import styles from "./profile.module.css";
-import Modal, { useModal } from "../../components/modal/index.jsx";
 import { useState, useEffect } from "react";
+import { getUserId, updateUser } from "../../services/user.js";
 
 function Profile() {
   const [imagePreview, setImagePreview] = useState(null);
-  const { open, onClose, onOpen } = useModal();
 
+  const [isDisabled, setIsDisabled] = useState(true);
   const [formData, setFormData] = useState({
+    id: 0,
     name: "",
     lastName: "",
     email: "",
   });
+  const [originData, setOriginData] = useState("");
 
   const handleSubmit = (e) => {
     const { name, value } = e.target;
@@ -22,8 +24,32 @@ function Profile() {
     }));
   };
 
+  const handleEdit = () => {
+    if (isDisabled) { 
+      setIsDisabled(false); 
+      return;
+    }
+
+    if (JSON.stringify(formData) !== JSON.stringify(originData)) {
+      const confirm = window.confirm(
+        "Los datos han cambiado. ¿Deseas continuar?"
+      );
+      if (!confirm) return;
+      updateUser(1, formData).then((response) => {
+        setOriginData(formData);
+      });
+    } else {
+      setIsDisabled(true);
+    }
+  };
+
   useEffect(() => {
     setImagePreview("../../../public/Avatares/id1.jpg");
+    setOriginData(formData);
+    getUserId(1).then((response) => {
+      setOriginData(response.data);
+      setFormData(response.data);
+    });
   }, []);
 
   return (
@@ -42,49 +68,46 @@ function Profile() {
           )}
         </div>
         <div className={styles.profileContent}>
-          <h2>Contenido</h2>
-          <p>contenido</p>
-          <button onClick={onOpen}>Editar</button>
-          <Modal isOpen={open} onClose={onClose} className={""}>
-            <h2>Editar perfil</h2>
-
-            <label htmlFor="name" className={styles.inputGroup}>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                required
-                value={formData.name}
-                onChange={handleSubmit}
-              />
-              <span>Nombres:</span>
-            </label>
-            <label htmlFor="lastName" className={styles.inputGroup}>
-              <input
-                type="text"
-                name="lastName"
-                id="lastName"
-                required
-                value={formData.lastName}
-                onChange={handleSubmit}
-              />
-              <span>Apellidos:</span>
-            </label>
-            <label htmlFor="email" className={styles.inputGroup}>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                required
-                value={formData.email}
-                onChange={handleSubmit}
-              />
-              <span>Correo:</span>
-            </label>
-            <div className={styles.profileFooter}>
-              <button>Guardar</button>
-            </div>
-          </Modal>
+          <h2>Datos</h2>
+          <label htmlFor="name" className={styles.inputGroup}>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              required
+              value={formData.name}
+              onChange={handleSubmit}
+              disabled={isDisabled}
+            />
+            <span>Nombres:</span>
+          </label>
+          <label htmlFor="lastName" className={styles.inputGroup}>
+            <input
+              type="text"
+              name="lastName"
+              id="lastName"
+              required
+              value={formData.lastName}
+              onChange={handleSubmit}
+              disabled={isDisabled}
+            />
+            <span>Apellidos:</span>
+          </label>
+          <label htmlFor="email" className={styles.inputGroup}>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              required
+              value={formData.email}
+              onChange={handleSubmit}
+              disabled={isDisabled}
+            />
+            <span>Correo:</span>
+          </label>
+          <button onClick={handleEdit}>
+            {isDisabled ? "Editar" : "Guardar"}
+          </button>
         </div>
       </div>
     </div>

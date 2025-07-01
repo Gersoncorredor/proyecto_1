@@ -6,30 +6,42 @@
   border-radius: 15px;
   cursor: pointer;
   transition: 0.5s ease-in-out;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 
   input {
     display: none;
   }
 
   &:has(input:checked) {
-    background-color: black;
+    background-color: var(--primary-500);
     color: white;
-    font-weight: 700;
     transition: 0.5s;
   }
 }
+
+.radioBtn:hover {
+  background-color: var(--secondary-400);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
 .SHcontainer {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
-
+  gap: 10px;
 }
 
+
 .SHselect {
-  width: 100%;
-  padding: 10px;
-  font-size: 20px;
-  border-radius: 15px;
-  cursor: pointer;
-  transition: 0.5s ease-in-out;
+  margin: 10px;
+  color: black;
+}
+.SHbtn {
+  color: var(--text-50);
+  background-color: var(--primary-600);
+  margin: 10px;
+  transition: all 0.5s ease;
+}
+.SHbtn:hover {
+  background-color: var(--primary-500);
+  box-shadow: 0 0 10px var(--primary-700);
 }

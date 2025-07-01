@@ -7,14 +7,12 @@ import {
   House,
   CircleUser,
   LogOut,
-  Eclipse,
-  SunMoon,
+  CalendarCog,
 } from "lucide-react";
 
 const Barra = () => {
-
   const navigate = useNavigate();
-  
+
   const [menu, setMenu] = useState(true);
 
   return (
@@ -25,23 +23,25 @@ const Barra = () => {
       </button>
       <div>
         {!menu && <h1>Menu</h1>}
-        <button onClick={() => navigate("/")} className={styles.barraMenu} >
+        <button onClick={() => navigate("/")} className={styles.barraMenu}>
           <House />
           {!menu && "Inicio"}
         </button>
-        <button onClick={() => navigate("/citas")} className={styles.barraMenu} >
-          <House />
+        <button onClick={() => navigate("/citas")} className={styles.barraMenu}>
+          <CalendarCog />
           {!menu && "Citas"}
         </button>
 
-        <button onClick={() => navigate("/perfil")} className={styles.barraMenu} >
+        <button
+          onClick={() => navigate("/perfil")}
+          className={styles.barraMenu}
+        >
           <CircleUser />
           {!menu && " Acerca de"}
         </button>
       </div>
       <div className={styles.barraFooter}>
-
-        <button onClick={() => navigate("/login")} className={styles.barraMenu} >
+        <button onClick={() => navigate("/login")} className={styles.barraMenu}>
           <LogOut />
           {!menu && " Cerrar sesión"}
         </button>

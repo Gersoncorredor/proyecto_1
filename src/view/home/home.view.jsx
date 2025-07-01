@@ -10,6 +10,7 @@ function Home() {
   const { open, onClose, onOpen } = useModal();
   const [formData, setFormData] = useState({
     fecha: "",
+
   });
 
   const handleSelect = (info) => {

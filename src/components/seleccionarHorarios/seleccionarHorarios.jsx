@@ -39,7 +39,7 @@ const SeleccionarHorario = () => {
     return (
       <>
         Tipo de Consulta:
-        <Select options={consulta} onChange={handleChange} />
+        <Select options={consulta} onChange={handleChange} className={styles.SHselect} />
       </>
     );
   };
@@ -57,7 +57,7 @@ const SeleccionarHorario = () => {
     return (
       <>
         Tipo de Oftalmologo:
-        <Select options={consulta} onChange={handleChange} />
+        <Select options={consulta} onChange={handleChange} className={styles.SHselect} />
       </>
     );
   };
@@ -95,7 +95,7 @@ const SeleccionarHorario = () => {
       <TipoConsulta />
       <TipoOftalmologo />
 
-      <button>Agendar</button>
+      <button className={styles.SHbtn}>Agendar</button>
     </>
   );
 };
