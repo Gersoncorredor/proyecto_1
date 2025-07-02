@@ -1,125 +1,129 @@
-import "../../App.css";
-import { UserRoundPen } from "lucide-react";
-import styles from "./profile.module.css";
-import Modal, { useModal } from "../../components/modal/index.jsx";
 import { useState, useEffect } from "react";
+import styles from "./seleccionarHorarios.module.css";
+import Select from "react-select";
+import { getHoursFech } from "../../services/hours.js";
+import { getUserByRole } from "../../services/user.js";
+import { getTipoConsulta } from "../../services/tipoConsulta.js";
 
-function Profile() {
-  const [imagePreview, setImagePreview] = useState(null);
-  const { open, onClose, onOpen } = useModal();
+const SeleccionarHorario = ({ fecha }) => {
+  const [hora, setHora] = useState("");
+  const [idHorario, setIdHorario] = useState(null);
 
-  const [formData, setFormData] = useState({
-    name: "juan",
-    lastName: "marin",
-    email: "juan@gmail.com",
-  });
-
-  const handleSubmit = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  const [horarios, setHorarios] = useState([]);
 
   useEffect(() => {
-    setImagePreview("../../../public/Avatares/id1.jpg");
-  }, []);
+    //consulta delos horarios disponibles
+    getHoursFech(fecha).then((res) => {
+      setHorarios(res.data);
+    });
+
+    getUserByRole(2).then((res) => {
+      res.data;
+    });
+  }, [fecha]);
+
+  const handleClick = (horario) => {
+    if (idHorario === horario.id) {
+      setHora("");
+      setIdHorario(null);
+    } else {
+      setHora(horario.hora);
+      setIdHorario(horario.id);
+    }
+  };
+
+  const TipoConsulta = () => {
+    const [tipoConsulta, setTipoConsulta] = useState([]);
+
+    useEffect(() => {
+      getTipoConsulta().then((res) => {
+        console.log(res.data);
+        const consulta = res.data.map((tipoConsulta) => ({
+          value: tipoConsulta.id,
+          label: tipoConsulta.tipo,
+        }));
+        setTipoConsulta(consulta);
+      });
+    }, []);
+
+    const handleChange = (selectedOption) => {
+      console.log("nombre selecionado:", selectedOption);
+    };
+    return (
+      <>
+        Tipo de Consulta:
+        <Select
+          options={tipoConsulta}
+          onChange={handleChange}
+          className={styles.SHselect}
+        />
+      </>
+    );
+  };
+
+  const TipoOftalmologo = () => {
+    const [tipoOftalmologo, setTipoOftalmologo] = useState([]);
+    useEffect(() => {
+      getUserByRole(2).then((res) => {
+        const oftalmologo = res.data.map((user) => ({
+          value: user.id,
+          label: `${user.name} ${user.lastName}`,
+        }));
+        setTipoOftalmologo(oftalmologo);
+      });
+    }, []);
+    const handleChange = (selectedOption) => {
+      console.log("nombre selecionado:", selectedOption);
+    };
+
+    return (
+      <>
+        Tipo de Oftalmologo:
+        <Select
+          options={tipoOftalmologo}
+          onChange={handleChange}
+          className={styles.SHselect}
+        />
+      </>
+    );
+  };
 
   return (
-    <div className={styles.profileContainer}>
-      <h1>Perfil</h1>
-      <div className={styles.profile}>
-        <div className={styles.iconProfile}>
-          {imagePreview ? (
-            <img
-              className={styles.iconImagen}
-              src={imagePreview}
-              alt="Preview"
-            />
-          ) : (
-            <UserRoundPen size={100} />
-          )}
-        </div>
-        <div className={styles.profileContent}>
-          <h2>Datos</h2>
-          <label htmlFor="name" className={styles.inputGroup}>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              required
-              value={formData.name}
-            />
-            <span>Nombre</span>
-          </label>
-          <label htmlFor="lastName" className={styles.inputGroup}>
-            <input
-              type="text"
-              id="lastName"
-              name="lastName"
-              required
-              value={formData.lastName}
-            />
-            <span>Apellido</span>
-          </label>
-          <label htmlFor="email" className={styles.inputGroup}>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              required
-              
-              value={formData.email}
-            />
-            <span>Correo</span>
-          </label>
-          <button onClick={onOpen}>Editar</button>
-
-          <Modal isOpen={open} onClose={onClose} className={""}>
-              <h2>Editar perfil</h2>
-
-              <label htmlFor="name" className={styles.inputGroup}>
-                <input
-                  type="text"
-                  name="name"
-                  id="name"
-                  required
-                  value={formData.name}
-                  onChange={handleSubmit}
-                />
-                <span>Nombres:</span>
-              </label>
-              <label htmlFor="lastName" className={styles.inputGroup}>
-                <input
-                  type="text"
-                  name="lastName"
-                  id="lastName"
-                  required
-                  value={formData.lastName}
-                  onChange={handleSubmit}
-                />
-                <span>Apellidos:</span>
-              </label>
-              <label htmlFor="email" className={styles.inputGroup}>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  required
-                  value={formData.email}
-                  onChange={handleSubmit}
-                />
-                <span>Correo:</span>
-              </label>
-            <div className={styles.profileFooter}>
-             <button type="button"onClick={onClose}>Cancelar</button> <button>Guardar</button>
-            </div>
-          </Modal>
-        </div>
+    <>
+      <div className={styles.SHcontainer}>
+        {horarios.map((horario) => {
+          return (
+            <label
+              htmlFor={horario.id}
+              key={crypto.randomUUID()}
+              className={styles.radioBtn}
+            >
+              <input
+                type="radio"
+                name="horario"
+                id={horario.id}
+                value={horario.hora}
+                defaultChecked={hora === horario.hora}
+                onInput={() => handleClick(horario)}
+              />
+              <span>{horario.hora}</span>
+            </label>
+          );
+        })}
       </div>
-    </div>
-  );
-}
+      {idHorario ? (
+        <p>
+          Has selecionado: <strong>{hora}</strong>
+        </p>
+      ) : (
+        <p>Por favor selecciona una hora</p>
+      )}
+      <TipoConsulta />
+      <TipoOftalmologo />
 
-export default Profile;
+      <button className={styles.SHbtn}>Agendar</button>
+    </>
+  );
+};
+
+export default SeleccionarHorario;

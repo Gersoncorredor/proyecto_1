@@ -16,3 +16,7 @@ export const createUser = (user) => {
 export const updateUser = (id, user) => {
   return api.put(endpoints.updateUser(id), user);
 };
+
+export const getUserByRole = (rol) => {
+  return api.get(endpoints.getUserByRole(rol))
+}

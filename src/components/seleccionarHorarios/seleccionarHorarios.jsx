@@ -1,22 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./seleccionarHorarios.module.css";
 import Select from "react-select";
+import { getHoursFech } from "../../services/hours.js";
+import { getUserByRole } from "../../services/user.js";
+import { getTipoConsulta } from "../../services/tipoConsulta.js";
 
-const SeleccionarHorario = () => {
+const SeleccionarHorario = ({ fecha }) => {
   const [hora, setHora] = useState("");
   const [idHorario, setIdHorario] = useState(null);
-  const horarios = [
-    { id: 1, hora: "08:00 AM" },
-    { id: 2, hora: "09:00 AM" },
-    { id: 3, hora: "10:00 AM" },
-    { id: 4, hora: "11:00 AM" },
-    { id: 5, hora: "12:00 PM" },
-    { id: 6, hora: "01:00 PM" },
-    { id: 7, hora: "02:00 PM" },
-    { id: 8, hora: "03:00 PM" },
-    { id: 9, hora: "04:00 PM" },
-    { id: 10, hora: "05:00 PM" },
-  ];
+
+  const [horarios, setHorarios] = useState([]);
+
+  useEffect(() => {
+    //consulta delos horarios disponibles
+    getHoursFech(fecha).then((res) => {
+      setHorarios(res.data);
+    });
+
+    getUserByRole(2).then((res) => {
+      res.data;
+    });
+  }, [fecha]);
 
   const handleClick = (horario) => {
     if (idHorario === horario.id) {
@@ -26,40 +30,6 @@ const SeleccionarHorario = () => {
       setHora(horario.hora);
       setIdHorario(horario.id);
     }
-  };
-
-  const consulta = [
-    { value: 1, label: "consulta" },
-    { value: 2, label: "examen" },
-  ];
-  const TipoConsulta = () => {
-    const handleChange = (selectedOption) => {
-      console.log("nombre selecionado:", selectedOption);
-    };
-    return (
-      <>
-        Tipo de Consulta:
-        <Select options={consulta} onChange={handleChange} className={styles.SHselect} />
-      </>
-    );
-  };
-
-  const TipoOftalmologo = () => {
-    const consulta = [
-      { value: 1, label: "Dr. Juan" },
-      { value: 2, label: "Dra. Maria" },
-      { value: 3, label: "Dr. Pedro" },
-    ];
-    const handleChange = (selectedOption) => {
-      console.log("nombre selecionado:", selectedOption);
-    };
-
-    return (
-      <>
-        Tipo de Oftalmologo:
-        <Select options={consulta} onChange={handleChange} className={styles.SHselect} />
-      </>
-    );
   };
 
   return (
@@ -92,10 +62,6 @@ const SeleccionarHorario = () => {
       ) : (
         <p>Por favor selecciona una hora</p>
       )}
-      <TipoConsulta />
-      <TipoOftalmologo />
-
-      <button className={styles.SHbtn}>Agendar</button>
     </>
   );
 };

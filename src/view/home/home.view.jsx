@@ -1,16 +1,17 @@
 import "../../App.css";
 import "@fullcalendar/common/main.css";
 import styles from "./home.module.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Modal, { useModal } from "../../components/modal/index";
 import SeleccionarHorario from "../../components/seleccionarHorarios/seleccionarHorarios.jsx";
 import Calendario from "../../components/calendario/calendario.jsx";
+import TipoConsulta from "../../components/tipoconsulta/tipoConsulta.jsx";
+import TipoOftalmologo from "../../components/tipooftalmologo/tipoOftalmologo.jsx";
 
 function Home() {
   const { open, onClose, onOpen } = useModal();
   const [formData, setFormData] = useState({
     fecha: "",
-
   });
 
   const handleSelect = (info) => {
@@ -26,7 +27,10 @@ function Home() {
       <Modal isOpen={open} onClose={onClose} className={styles.modalHome}>
         <h2>Agendar</h2>
         <strong>Fecha: {formData.fecha}</strong>
-        <SeleccionarHorario />
+        <SeleccionarHorario fecha={formData.fecha} />
+        <TipoConsulta />
+        <TipoOftalmologo />
+        <button className={styles.homebtn}>Agendar</button>
       </Modal>
     </div>
   );
