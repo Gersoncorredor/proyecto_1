@@ -17,7 +17,7 @@ const TipoConsulta = ({seleccionarConsulta}) => {
   }, []);
 
   const handleChange = (selectedOption) => {
-    seleccionarConsulta(selectedOption.value);
+    seleccionarConsulta(parseInt(selectedOption.value));
   };
   return (
     <>

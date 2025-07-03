@@ -9,6 +9,7 @@ const endpoints = {
     getUserByRole: (rol) => `/user?rol=${rol}`,
     /* hours */
     getHoursFech: (Fech) => `/hours?fecha=${Fech}`,
+    getHours: "/hours",
     createHour: "/hours",
     deleteHourId: (id) => `/hours/${id}`,
     /* Tipos de Consulta */
@@ -17,6 +18,9 @@ const endpoints = {
 
     /* agendar una cita */
     schedule: "/citas",
+    getSchedule: "/citas"
+
+
 
 }
 

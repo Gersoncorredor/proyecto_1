@@ -37,6 +37,7 @@ function Profile() {
       if (!confirm) return;
       updateUser(1, formData).then((response) => {
         setOriginData(formData);
+        setIsDisabled(true);
       });
     } else {
       setIsDisabled(true);

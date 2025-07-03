@@ -12,19 +12,17 @@ import { schedule } from "../../services/schedule.js";
 function Home() {
   const { open, onClose, onOpen } = useModal();
   const user = localStorage.getItem("user_id");
-
+  const [fecha, setFecha] = useState("");
   const [formData, setFormData] = useState({
-    fecha: "",
-    hora: "",
-    TipoConsulta: "",
-    TipoOftalmologo: "",
-    idUser: user,
+    fechaYhora: null,
+    tipoConsulta: null,
+    tipoOftalmologo: null,
+    idUser: 3,
   });
 
   const handleSelect = (info) => {
-    setFormData({
-      fecha: info.startStr,
-    });
+    setFecha(info.startStr);
+
     onOpen();
   };
 
@@ -41,27 +39,29 @@ function Home() {
       <Calendario handleSelect={handleSelect} />
       <Modal isOpen={open} onClose={onClose} className={styles.modalHome}>
         <h2>Agendar</h2>
-        <strong>Fecha: {formData.fecha}</strong>
+        <strong>Fecha: {fecha}</strong>
         <SeleccionarHorario
-          fecha={formData.fecha}
+          fecha={fecha}
           selecionarHora={(id) => {
-            setFormData({ ...formData, hora: id });
+            setFormData({ ...formData, fechaYhora: id });
           }}
         />
         <TipoConsulta
           seleccionarConsulta={(id) => {
-            setFormData({ ...formData, TipoConsulta: id });
+            setFormData({ ...formData, tipoConsulta: id });
           }}
         />
         <TipoOftalmologo
           seleccionarOftalmologo={(id) =>
             setFormData({
               ...formData,
-              TipoOftalmologo: id,
+              tipoOftalmologo: id,
             })
           }
         />
-        <button type="submit" className={styles.homebtn} onClick={handleSubmit} >Agendar</button>
+        <button type="submit" className={styles.homebtn} onClick={handleSubmit}>
+          Agendar
+        </button>
       </Modal>
     </div>
   );

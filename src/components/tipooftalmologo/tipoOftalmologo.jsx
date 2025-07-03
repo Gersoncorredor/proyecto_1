@@ -17,7 +17,7 @@ import { getUserByRole } from "../../services/user.js";
     }, []);
     const handleChange = (selectedOption) => {
       console.log(selectedOption.value)
-      seleccionarOftalmologo(selectedOption.value);
+      seleccionarOftalmologo(parseInt(selectedOption.value));
     };
 
     return (

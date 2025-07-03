@@ -136,10 +136,8 @@ body,html,#root  {
 
 .app {
   margin-left: 70px;
-  padding: 20px;
   width: 90vw;
   height: 100vh;
   display: flex;
-  overflow: hidden;
 }
 

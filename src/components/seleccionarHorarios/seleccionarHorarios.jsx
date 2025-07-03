@@ -3,7 +3,7 @@ import styles from "./seleccionarHorarios.module.css";
 import { getHoursFech } from "../../services/hours.js";
 import { getUserByRole } from "../../services/user.js";
 
-const SeleccionarHorario = ({ fecha , selecionarHora}) => {
+const SeleccionarHorario = ({ fecha , selecionarHora }) => {
   const [hora, setHora] = useState("");
   const [idHorario, setIdHorario] = useState(null);
 
@@ -23,7 +23,7 @@ const SeleccionarHorario = ({ fecha , selecionarHora}) => {
   const handleClick = (horario) => {
     setHora(horario.hora);
     setIdHorario(horario.id);
-    selecionarHora(horario.id);
+    selecionarHora(parseInt(horario.id));
   };
 
   return (
