@@ -14,6 +14,10 @@ const endpoints = {
     /* Tipos de Consulta */
     getTipoConsulta: "/tipoConsulta",
 
+
+    /* agendar una cita */
+    schedule: "/citas",
+
 }
 
 export default endpoints;

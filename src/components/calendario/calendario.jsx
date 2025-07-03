@@ -8,7 +8,12 @@ const Calendario = ({ handleSelect }) => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const formatDate = (date) => date.toISOString().split("T")[0];
+  //AÑO
+  const year = today.getFullYear();
+  //MES
+  const month = today.getMonth();
 
+  const endDate = new Date(year, month + 2, 1);
 
   return (
     <div className="C-calendario">
@@ -17,7 +22,11 @@ const Calendario = ({ handleSelect }) => {
         initialView="dayGridMonth"
         locale="es"
         selectable={true}
-        validRange={{ start: formatDate(today) }}
+        validRange={{
+          start: formatDate(today),
+          end: endDate.toISOString().slice(0, 10),
+          
+        }}
         selectAllow={(seleccInfo) => {
           const selectedDate = new Date(seleccInfo.start);
           selectedDate.setHours(0, 0, 0, 0);

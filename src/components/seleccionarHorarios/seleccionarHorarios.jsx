@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 import styles from "./seleccionarHorarios.module.css";
-import Select from "react-select";
 import { getHoursFech } from "../../services/hours.js";
 import { getUserByRole } from "../../services/user.js";
-import { getTipoConsulta } from "../../services/tipoConsulta.js";
 
-const SeleccionarHorario = ({ fecha }) => {
+const SeleccionarHorario = ({ fecha , selecionarHora}) => {
   const [hora, setHora] = useState("");
   const [idHorario, setIdHorario] = useState(null);
 
@@ -23,13 +21,9 @@ const SeleccionarHorario = ({ fecha }) => {
   }, [fecha]);
 
   const handleClick = (horario) => {
-    if (idHorario === horario.id) {
-      setHora("");
-      setIdHorario(null);
-    } else {
-      setHora(horario.hora);
-      setIdHorario(horario.id);
-    }
+    setHora(horario.hora);
+    setIdHorario(horario.id);
+    selecionarHora(horario.id);
   };
 
   return (
@@ -48,7 +42,7 @@ const SeleccionarHorario = ({ fecha }) => {
                 id={horario.id}
                 value={horario.hora}
                 defaultChecked={hora === horario.hora}
-                onInput={() => handleClick(horario)}
+                onChange={() => handleClick(horario)}
               />
               <span>{horario.hora}</span>
             </label>

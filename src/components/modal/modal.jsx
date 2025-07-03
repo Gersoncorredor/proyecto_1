@@ -11,7 +11,6 @@ const Modal = ({ isOpen, onClose, children, className = "" }) => {
   return (
     <div className={styles.modalOverlay} onClick={handleClickOutside}>
       <form
-        method="POST"
         className={`${styles.modalContent} ${className}`}
         onClick={(e) => e.stopPropagation()}
       >

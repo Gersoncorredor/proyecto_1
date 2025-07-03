@@ -3,7 +3,8 @@ import styles from "./tipoOftalmologo.module.css";
 import Select from "react-select";
 import { getUserByRole } from "../../services/user.js";
  
- const TipoOftalmologo = () => {
+ const TipoOftalmologo = ({seleccionarOftalmologo}) => {
+
     const [tipoOftalmologo, setTipoOftalmologo] = useState([]);
     useEffect(() => {
       getUserByRole(2).then((res) => {
@@ -15,7 +16,8 @@ import { getUserByRole } from "../../services/user.js";
       });
     }, []);
     const handleChange = (selectedOption) => {
-      console.log("nombre selecionado:", selectedOption);
+      console.log(selectedOption.value)
+      seleccionarOftalmologo(selectedOption.value);
     };
 
     return (

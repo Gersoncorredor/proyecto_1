@@ -1,129 +1,140 @@
-import { useState, useEffect } from "react";
-import styles from "./seleccionarHorarios.module.css";
-import Select from "react-select";
-import { getHoursFech } from "../../services/hours.js";
-import { getUserByRole } from "../../services/user.js";
-import { getTipoConsulta } from "../../services/tipoConsulta.js";
+Perfecto. Vamos a construir un modelo **limpio y funcional** para un sistema clínico básico (como un centro oftalmológico) que:
 
-const SeleccionarHorario = ({ fecha }) => {
-  const [hora, setHora] = useState("");
-  const [idHorario, setIdHorario] = useState(null);
+* Registra **usuarios** (clientes y doctores)
+* Permite **agendar citas**
+* Guarda el **diagnóstico** y tipo de **consulta**
+* Lleva un pequeño **historial médico**
+* Administra los **horarios disponibles**
 
-  const [horarios, setHorarios] = useState([]);
+---
 
-  useEffect(() => {
-    //consulta delos horarios disponibles
-    getHoursFech(fecha).then((res) => {
-      setHorarios(res.data);
-    });
+## ✅ Tablas necesarias
 
-    getUserByRole(2).then((res) => {
-      res.data;
-    });
-  }, [fecha]);
+A continuación, diseño las tablas **mínimas y necesarias**, optimizadas para un sistema médico funcional, incluyendo relaciones clave.
 
-  const handleClick = (horario) => {
-    if (idHorario === horario.id) {
-      setHora("");
-      setIdHorario(null);
-    } else {
-      setHora(horario.hora);
-      setIdHorario(horario.id);
-    }
-  };
+---
 
-  const TipoConsulta = () => {
-    const [tipoConsulta, setTipoConsulta] = useState([]);
+### 🚀 **Script de base de datos limpio y funcional**
 
-    useEffect(() => {
-      getTipoConsulta().then((res) => {
-        console.log(res.data);
-        const consulta = res.data.map((tipoConsulta) => ({
-          value: tipoConsulta.id,
-          label: tipoConsulta.tipo,
-        }));
-        setTipoConsulta(consulta);
-      });
-    }, []);
+```sql
+CREATE DATABASE dlytime;
+USE dlytime;
 
-    const handleChange = (selectedOption) => {
-      console.log("nombre selecionado:", selectedOption);
-    };
-    return (
-      <>
-        Tipo de Consulta:
-        <Select
-          options={tipoConsulta}
-          onChange={handleChange}
-          className={styles.SHselect}
-        />
-      </>
-    );
-  };
+-- Tipos de documento (Cédula, Pasaporte, etc.)
+CREATE TABLE id_type (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(35) NOT NULL
+);
 
-  const TipoOftalmologo = () => {
-    const [tipoOftalmologo, setTipoOftalmologo] = useState([]);
-    useEffect(() => {
-      getUserByRole(2).then((res) => {
-        const oftalmologo = res.data.map((user) => ({
-          value: user.id,
-          label: `${user.name} ${user.lastName}`,
-        }));
-        setTipoOftalmologo(oftalmologo);
-      });
-    }, []);
-    const handleChange = (selectedOption) => {
-      console.log("nombre selecionado:", selectedOption);
-    };
+-- Roles de usuario (cliente, doctor, admin, etc.)
+CREATE TABLE role (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(20) NOT NULL
+);
 
-    return (
-      <>
-        Tipo de Oftalmologo:
-        <Select
-          options={tipoOftalmologo}
-          onChange={handleChange}
-          className={styles.SHselect}
-        />
-      </>
-    );
-  };
+-- Persona (cliente, doctor, etc.)
+CREATE TABLE person (
+    document_number INT PRIMARY KEY,
+    first_name VARCHAR(30) NOT NULL,
+    last_name VARCHAR(30) NOT NULL,
+    email VARCHAR(50) NOT NULL UNIQUE,
+    phone VARCHAR(15),
+    password VARCHAR(61) NOT NULL,
+    birth_date DATE,
+    gender ENUM('Male', 'Female', 'Other') NOT NULL,
+    address VARCHAR(100),
+    status ENUM('Active', 'Inactive') DEFAULT 'Active',
+    role_id INT NOT NULL,
+    id_type_id INT NOT NULL,
+    FOREIGN KEY (role_id) REFERENCES role(id),
+    FOREIGN KEY (id_type_id) REFERENCES id_type(id)
+);
 
-  return (
-    <>
-      <div className={styles.SHcontainer}>
-        {horarios.map((horario) => {
-          return (
-            <label
-              htmlFor={horario.id}
-              key={crypto.randomUUID()}
-              className={styles.radioBtn}
-            >
-              <input
-                type="radio"
-                name="horario"
-                id={horario.id}
-                value={horario.hora}
-                defaultChecked={hora === horario.hora}
-                onInput={() => handleClick(horario)}
-              />
-              <span>{horario.hora}</span>
-            </label>
-          );
-        })}
-      </div>
-      {idHorario ? (
-        <p>
-          Has selecionado: <strong>{hora}</strong>
-        </p>
-      ) : (
-        <p>Por favor selecciona una hora</p>
-      )}
-      <TipoConsulta />
-      <TipoOftalmologo />
+-- Diagnóstico (enfermedad, condición, etc.)
+CREATE TABLE diagnosis (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    description VARCHAR(300) NOT NULL
+);
 
-      <button className={styles.SHbtn}>Agendar</button>
-    </>
-  );
-};
+-- Tipos de consulta (General, Especializada, etc.)
+CREATE TABLE consultation_type (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(30) NOT NULL
+);
 
-export default SeleccionarHorario;
+-- Horarios disponibles
+CREATE TABLE schedule (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    appointment_date DATE NOT NULL,
+    appointment_time TIME NOT NULL,
+    status ENUM('Available', 'Reserved', 'Cancelled') NOT NULL DEFAULT 'Available'
+);
+
+-- Citas agendadas
+CREATE TABLE appointment (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    client_document_number INT NOT NULL,
+    doctor_document_number INT NOT NULL,
+    FOREIGN KEY (client_document_number) REFERENCES person(document_number),
+    FOREIGN KEY (doctor_document_number) REFERENCES person(document_number)
+);
+
+-- Detalles de la cita (relaciona consulta, horario, diagnóstico)
+CREATE TABLE appointment_detail (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    appointment_id INT NOT NULL,
+    diagnosis_id INT,
+    consultation_type_id INT NOT NULL,
+    schedule_id INT NOT NULL,
+    status ENUM('Scheduled', 'Completed', 'Cancelled') DEFAULT 'Scheduled',
+    location VARCHAR(100),
+    notes TEXT,
+    FOREIGN KEY (appointment_id) REFERENCES appointment(id),
+    FOREIGN KEY (diagnosis_id) REFERENCES diagnosis(id),
+    FOREIGN KEY (consultation_type_id) REFERENCES consultation_type(id),
+    FOREIGN KEY (schedule_id) REFERENCES schedule(id)
+);
+
+-- Historial médico por paciente
+CREATE TABLE medical_history (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    patient_document_number INT NOT NULL,
+    diagnosis_id INT NOT NULL,
+    recorded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    notes TEXT,
+    FOREIGN KEY (patient_document_number) REFERENCES person(document_number),
+    FOREIGN KEY (diagnosis_id) REFERENCES diagnosis(id)
+);
+```
+
+---
+
+## 📦 Contenido de este modelo
+
+| Tabla                | Contiene                                        |
+| -------------------- | ----------------------------------------------- |
+| `id_type`            | Tipo de documento (ej. Cédula, Pasaporte)       |
+| `role`               | Rol del usuario (Cliente, Doctor, Admin)        |
+| `person`             | Personas del sistema                            |
+| `diagnosis`          | Enfermedades o condiciones                      |
+| `consultation_type`  | Tipo de consulta (Ej. General, Especializada)   |
+| `schedule`           | Fechas y horas disponibles                      |
+| `appointment`        | Relación cliente <-> doctor                     |
+| `appointment_detail` | Detalles de la cita: tipo, horario, diagnóstico |
+| `medical_history`    | Diagnósticos pasados del paciente               |
+
+---
+
+### ✅ ¿Listo para usar?
+
+Sí. Puedes trabajar con esta estructura desde ya. Está pensada para:
+
+* Consultas médicas
+* Especialistas por documento
+* Horarios disponibles
+* Gestión de diagnósticos
+* Historial clínico básico
+
+---
+
+¿Quieres que te agregue algunos **datos de prueba (`INSERT`)** para verificar que funciona correctamente? ¿O te genero el **diagrama visual (ERD)** para verlo gráficamente?
