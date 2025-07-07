@@ -9,7 +9,29 @@ import { getSchedule } from "../../services/schedule.js";
 const Citas = () => {
   const [citas, setCitas] = useState([]);
 
+  const formatearCita = (cita, usersRes, horasRes, tiposRes) => {
+    const user = usersRes.data.find((us) => Number(us.id) === Number(cita.idUser));
+    const oftalmólogo = usersRes.data.find(
+      (us) => Number(us.id) === Number(cita.tipoOftalmologo)
+    );
+    const horas = horasRes.data.find((ho) => Number(ho.id) === Number(cita.fechaYhora));
+    const tipoConsulta = tiposRes.data.find(
+      (tc) => Number(tc.id) === Number(cita.tipoConsulta)
+    );
+    return {
+      ...cita,
+      fecha: horas?.fecha || "Desconocido",
+      hora: horas?.hora || "Desconocido",
+      consulta: tipoConsulta?.tipo || "Desconocido",
+      oftalmologo: oftalmólogo
+        ? `${oftalmólogo.name} ${oftalmólogo.lastName}`
+        : "Desconocido",
+      usuario: user ? `${user.name} ${user.lastName}` : "Desconocido",
+    };
+  };
+
   useEffect(() => {
+
     const fetchAll = async () => {
       try {
         const [citasRes, horasRes, tiposRes, usersRes] = await Promise.all([
@@ -18,48 +40,30 @@ const Citas = () => {
           getTipoConsulta(),
           getUser(),
         ]);
-        const citasR = citasRes.data;
-        const horasR = horasRes.data;
-        const tiposR = tiposRes.data;
-        const usersR = usersRes.data;
-
-
-        const citasFormateadas = citasR.map((cita) => {
-          const user = usersR.find(
-            (us) => us.id.toString() === cita.idUser.toString()
-          );
-          const oftalmólogo = usersR.find(
-            (us) => us.id.toString() === cita.tipoOftalmologo.toString()
-          );
-          const horas = horasR.find(
-            (ho) => ho.id.toString() === cita.fechaYhora.toString()
-          );
-          const tipoConsulta = tiposR.find(
-            (tc) => tc.id.toString() === cita.tipoConsulta.toString()
-          );
-          return {
-            ...cita,
-            fecha: horas ? `${horas.fecha}` : "Desconocido",
-            hora: horas ? `${horas.hora}` : "Desconocido",
-            consulta: tipoConsulta ? `${tipoConsulta.tipo}` : "Desconocido",
-            oftalmologo: oftalmólogo
-              ? `${oftalmólogo.name} ${oftalmólogo.lastName}`
-              : "Desconocido",
-            usuario: user ? `${user.name} ${user.lastName}` : "Desconocido",
-          };
-        });
+        const citasFormateadas = citasRes.data.map((cita) =>
+          formatearCita(cita, usersRes, horasRes, tiposRes)
+        );
         setCitas(citasFormateadas);
       } catch (error) {
         console.error("Error al cargar datos:", error);
       }
     };
     fetchAll();
+
+
   }, []);
 
+  const columnas = [
+    { header: "Fecha", accessor: "fecha" },
+    { header: "Hora", accessor: "hora" },
+    { header: "Consulta", accessor: "consulta" },
+    { header: "Oftalmólogo", accessor: "oftalmologo" },
+    { header: "Usuario", accessor: "usuario" },
+  ];
   return (
     <div className={styles.container}>
       <h1>Citas</h1>
-      <CTable data={citas} />
+      <CTable data={citas} columns={columnas} />
     </div>
   );
 };

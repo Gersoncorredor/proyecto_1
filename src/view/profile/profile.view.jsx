@@ -6,8 +6,9 @@ import { getUserId, updateUser } from "../../services/user.js";
 
 function Profile() {
   const [imagePreview, setImagePreview] = useState(null);
-
+  
   const [isDisabled, setIsDisabled] = useState(true);
+  const id = 1
   const [formData, setFormData] = useState({
     id: 0,
     name: "",
@@ -35,7 +36,7 @@ function Profile() {
         "Los datos han cambiado. ¿Deseas continuar?"
       );
       if (!confirm) return;
-      updateUser(1, formData).then((response) => {
+      updateUser(id, formData).then((response) => {
         setOriginData(formData);
         setIsDisabled(true);
       });
@@ -44,13 +45,15 @@ function Profile() {
     }
   };
 
+
   useEffect(() => {
     setImagePreview("../../../public/Avatares/id1.jpg");
     setOriginData(formData);
-    getUserId(1).then((response) => {
+     getUserId(id).then((response) => {
       setOriginData(response.data);
       setFormData(response.data);
     });
+
   }, []);
 
   return (

@@ -1,0 +1,99 @@
+import  { useState } from "react";
+import styles from "./barra.module.css";
+import { useNavigate } from "react-router-dom";
+import { Thema } from "./thema/thema";
+import {
+  Menu,
+  House,
+  CircleUser,
+  LogOut,
+  CalendarCog,
+} from "lucide-react";
+
+const Barra = () => {
+  const navigate = useNavigate();
+
+  const [menu, setMenu] = useState(true);
+
+  return (
+    <div className={`${styles.barra} ${menu ? "" : styles.expandida}`}>
+      <button className={styles.barraMenu} onClick={() => setMenu(!menu)}>
+        <Menu />
+        {!menu && "Menu"}
+      </button>
+      <div>
+        {!menu && <h1>Menu</h1>}
+        <button onClick={() => navigate("/")} className={styles.barraMenu}>
+          <House />
+          {!menu && "Inicio"}
+        </button>
+        <button onClick={() => navigate("/citas")} className={styles.barraMenu}>
+          <CalendarCog />
+          {!menu && "Citas"}
+        </button>
+
+        <button
+          onClick={() => navigate("/perfil")}
+          className={styles.barraMenu}
+        >
+          <CircleUser />
+          {!menu && " Acerca de"}
+        </button>
+      </div>
+      <div className={styles.barraFooter}>
+        <button onClick={() => navigate("/login")} className={styles.barraMenu}>
+          <LogOut />
+          {!menu && " Cerrar sesión"}
+        </button>
+        <Thema />
+      </div>
+    </div>
+  );
+};
+
+export default Barra;
+
+
+
+
+.barra {
+  background-color: var(--background-600);
+  transition: all 0.4s ease;
+  align-items: flex-start;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 70px;
+  padding: 10px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.expandida {
+  width: 180px;
+  transition: width 0.4s ease;
+}
+
+.barraMenu {
+  background-color: var(--primary-700);
+  width: 100%;
+
+  margin: 5px 0;
+  transition: all 0.4s ease;
+  color: var(--text-100);
+  align-items: center;
+  display: flex;
+  outline: none;
+  border: none;
+  &:hover {
+    background-color: var(--background-400);
+  }
+}
+
+.barraFooter {
+  margin-top: auto;
+  width: 100%;
+  padding: 10px 0;
+}
