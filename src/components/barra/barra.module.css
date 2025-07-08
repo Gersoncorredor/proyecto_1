@@ -1,39 +1,253 @@
-.barra {
-  background-color: var(--background-600);
-  transition: all 0.4s ease;
-  align-items: flex-start;
-  position: fixed;
-  top: 0;
-  left: 0;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.bBody {
   height: 100vh;
-  width: 70px;
-  padding: 10px;
-  z-index: 2;
+  width: 100%;
+}
+/* ---MENU--- */
+.menu{
+  position: fixed;
+  width: 50px;
+  height: 50px;
+  font-size: 30px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: var(--background-950);
+  color: var(--primary-50);
+  right: 15px;
+  top: 15px;
+}
+
+/* ---BARRA LATERAL--- */
+.barraLateral {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  width: 250px;
+  height: 100%;
+  padding: 20px 5px;
+  background-color: var(--background-200);
+  overflow: hidden;
+  transition: width 0.5s ease, background-color 0.2s ease;
 }
 
-.expandida {
-  width: 180px;
-  transition: width 0.4s ease;
+.miniBarraLateral { 
+  width: 80px;
+}
+.barraLateral span {
+  width: 100px;
+  white-space: nowrap;
+  font-size: 18px;
+  text-align: left;
+  opacity: 1;
+  transition: opacity 0.5s ease, width 0.5s ease;
 }
 
-.barraMenu {
-  background-color: var(--primary-700);
-  margin: 5px 0;
-  transition: all 0.4s ease;
-  color: var(--text-100);
-  align-items: center;
+.barraLateral span.oculto {
+  opacity: 0;
+  width: 0;
+}
+
+/*-NOMBRE DE LA PAGINA-*/
+.barraLateral .nombrePagina {
+  width: 100%;
+  height: 45px;
   display: flex;
-  outline: none;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.barraLateral .nombrePagina .icono {
+  min-width: 70px;
+  cursor: pointer;
+}
+.barraLateral .nombrePagina span {
+  margin-left: 5px;
+  font-size: 25px;
+}
+
+/* -BOTONES- */
+.barraLateral .boton {
+  width: 100%;
+  height: 45px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: none;
-  &:hover {
-    background-color: var(--background-400);
+  border-radius: 10px;
+  background-color: var(--primary-950);
+  color: var(--text-50);
+}
+.barraLateral .boton .icon {
+  min-width: 50px;
+}
+
+/* -MENU NAVEGACION */
+.barraLateral .navegacion{
+   height: 100%;
+   overflow-y:auto;
+   overflow-x: hidden ;
+
+}
+.barraLateral .navegacion::-webkit-scrollbar{
+width: 5px;
+}
+.barraLateral .navegacion::-webkit-scrollbar-thumb{
+  background-color: aqua;
+  border-radius: 5px;
+}
+.barraLateral .navegacion::-webkit-scrollbar-thumb:hover{
+  background-color: red;
+}
+.barraLateral .navegacion li {
+  list-style: none;
+  display: flex;
+  margin-bottom: 5px;
+}
+
+.barraLateral .navegacion a {
+  width: 100%;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  border-radius: 10px;
+  color: rgba(134, 136, 144);
+}
+
+.barraLateral .navegacion a:hover {
+  background-color: var(--primary-300);
+  color: var(--text-950);
+  transition: all 0.3s ease;
+}
+
+.barraLateral .navegacion .icon {
+  min-width: 70px;
+}
+
+.barraLateral .linea {
+  width: 100%;
+  height: 1px;
+  margin-top: 15px;
+  background-color: var(--background-300);
+}
+
+/* -TEMA MODO OSCURO O CLARO- */
+.barraLateral .modoOscuro {
+  width: 100%;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.barraLateral .modoOscuro .info {
+  width: 150px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  color: rgba(134, 136, 144);
+}
+
+.barraLateral .modoOscuro .iconMode {
+  min-width: 70px;
+}
+/* -SWITCH- */
+.barraLateral .modoOscuro .switch {
+  min-width: 70px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.barraLateral .modoOscuro .base {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 35px;
+  height: 20px;
+  background-color: var(--accent-600);
+  border-radius: 50px;
+}
+
+.barraLateral .modoOscuro .circulo {
+  position: absolute;
+  width: 18px;
+  height: 90%;
+  background-color: var(--background-900);
+  border-radius: 50%;
+  left: 2px;
+  transition: left 0.5s ease;
+}
+.barraLateral .modoOscuro .circulo.prendido {
+  left: 15px;
+}
+
+/* --USUARIO-- */
+.barraLateral .usuario{
+   width: 100%;
+   display: flex;
+}
+
+.barraLateral .usuario img{
+  width: 70px;
+  min-width: 70px;
+  border-radius: 10px;
+}
+
+.barraLateral .usuario .infoUsuario {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--text-950);
+  overflow: hidden;
+}
+
+.barraLateral .usuario .nombreEmail {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-left: 5px;
+}
+
+.barraLateral .usuario .name {
+  font-size: 15px;
+  font-weight: 600;  
+}
+
+.barraLateral .usuario .email {
+  font-size: 13px;
+} 
+
+.barraLateral .usuario .icon {
+ width: 20px;
+ height: 20px;
+}
+
+@media (max-height: 600px) {
+  .barraLateral .nombrePagina {
+    margin-bottom: 5px;
+  }
+
+  .barraLateral .modoOscuro{
+    margin-bottom: 3px;
   }
 }
 
-.barraFooter {
-  margin-top: auto;
-  width: 100%;
-  padding: 10px 0;
+@media (max-width: 600px) {
+  .barraLateral{
+    position: absolute;
+    left: -250px;
+  }
 }

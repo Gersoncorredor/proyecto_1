@@ -7,13 +7,13 @@ import Citas from './view/citas/citas.view.jsx';
 
 function App() {
   return (
-    <Router> 
+<Router> 
       <Barra /> 
       <div className="app">
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/perfil" element={<Profile />} />
         <Route path="/citas" element={<Citas />} />
+        <Route path="/perfil" element={<Profile />} />
       </Routes>
       </div>
     </Router>
