@@ -1,15 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Eclipse, SunMoon } from "lucide-react";
 import styles from "../barra.module.css";
 
 export const Thema = ({ menu }) => {
-  const [mode, setMode] = useState(
-    window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
-  );
+  const [mode, setMode] = useState(() => {
+    const saved = localStorage.getItem("theme");
+    if (saved) return saved;
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  });
+
+  useEffect(()=> {
+    document.documentElement.setAttribute("data-Theme", mode);
+
+  },[mode])
+
   const toggleMode = () => {
     setMode((prev) => {
       const newmode = prev === "dark" ? "light" : "dark";
       document.documentElement.setAttribute("data-theme", newmode);
+      localStorage.setItem("theme", newmode)
       return newmode;
     });
   };

@@ -102,7 +102,7 @@ const Barra = ({ menu, setMenu, miniMenu, setMiniMenu, children }) => {
         <div>
           <div className={styles.linea} />
           <Thema menu={menu} />
-          <div className={styles.usuario}>
+          <div className={styles.usuario} onClick={() => navigate("/perfil")}>
             <UseProfile />
             <div className={styles.infoUsuario}>
               <div className={styles.nombreEmail}>
@@ -115,7 +115,7 @@ const Barra = ({ menu, setMenu, miniMenu, setMiniMenu, children }) => {
                   {user.email}
                 </span>
               </div>
-              <EllipsisVertical
+              <EllipsisVertical  
                 className={`${styles.icon} ${menu ? styles.oculto : ""}`}
               />
             </div>

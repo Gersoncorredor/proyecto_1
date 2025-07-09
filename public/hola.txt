@@ -1,99 +1,40 @@
-import  { useState } from "react";
-import styles from "./barra.module.css";
-import { useNavigate } from "react-router-dom";
-import { Thema } from "./thema/thema";
-import {
-  Menu,
-  House,
-  CircleUser,
-  LogOut,
-  CalendarCog,
-} from "lucide-react";
+import { useState, useEffect } from "react";
+import { Eclipse, SunMoon } from "lucide-react";
+import styles from "../barra.module.css";
 
-const Barra = () => {
-  const navigate = useNavigate();
+export const Thema = ({ menu }) => {
+  const [mode, setMode] = useState(() => {
+    const saved = localStorage.getItem("theme");
+    if (saved) return saved;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  });
 
-  const [menu, setMenu] = useState(true);
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", mode);
+  }, [mode]);
+
+  const toggleMode = () => {
+    setMode((prev) => {
+      const newMode = prev === "dark" ? "light" : "dark";
+      localStorage.setItem("theme", newMode);
+      return newMode;
+    });
+  };
 
   return (
-    <div className={`${styles.barra} ${menu ? "" : styles.expandida}`}>
-      <button className={styles.barraMenu} onClick={() => setMenu(!menu)}>
-        <Menu />
-        {!menu && "Menu"}
-      </button>
-      <div>
-        {!menu && <h1>Menu</h1>}
-        <button onClick={() => navigate("/")} className={styles.barraMenu}>
-          <House />
-          {!menu && "Inicio"}
-        </button>
-        <button onClick={() => navigate("/citas")} className={styles.barraMenu}>
-          <CalendarCog />
-          {!menu && "Citas"}
-        </button>
-
-        <button
-          onClick={() => navigate("/perfil")}
-          className={styles.barraMenu}
-        >
-          <CircleUser />
-          {!menu && " Acerca de"}
-        </button>
+    <div className={styles.modoOscuro}>
+      <div className={styles.info}>
+        {mode === "dark" && <Eclipse size={20} className={styles.iconMode} />}
+        {mode === "light" && <SunMoon size={20} className={styles.iconMode} />}
+        <span className={menu ? styles.oculto : ""}>{mode}</span>
       </div>
-      <div className={styles.barraFooter}>
-        <button onClick={() => navigate("/login")} className={styles.barraMenu}>
-          <LogOut />
-          {!menu && " Cerrar sesión"}
-        </button>
-        <Thema />
+      <div className={styles.switch} onClick={toggleMode}>
+        <div className={styles.base}>
+          <div
+            className={`${styles.circulo} ${mode === "dark" ? styles.prendido : ""}`}
+          />
+        </div>
       </div>
     </div>
   );
 };
-
-export default Barra;
-
-
-
-
-.barra {
-  background-color: var(--background-600);
-  transition: all 0.4s ease;
-  align-items: flex-start;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 70px;
-  padding: 10px;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-}
-
-.expandida {
-  width: 180px;
-  transition: width 0.4s ease;
-}
-
-.barraMenu {
-  background-color: var(--primary-700);
-  width: 100%;
-
-  margin: 5px 0;
-  transition: all 0.4s ease;
-  color: var(--text-100);
-  align-items: center;
-  display: flex;
-  outline: none;
-  border: none;
-  &:hover {
-    background-color: var(--background-400);
-  }
-}
-
-.barraFooter {
-  margin-top: auto;
-  width: 100%;
-  padding: 10px 0;
-}
