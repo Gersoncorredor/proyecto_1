@@ -1,33 +1,180 @@
+.C-calendario * {
+  overflow: hidden !important;
+}
+
+/* Contenedor principal */
 .C-calendario {
   position: absolute;
-  width: 50%;
-  height: 50%;
-}
-.fc {
-  padding: 1rem;
-  border-radius: 4%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  font-family: "Times New Roman", Times, serif;
-  background-color: var(--background-500);
-}
-
-.fc .fc-button-primary {
-  background-color: var(--background-500);
-}
-.fc-col-header {
-  background-color: var(--primary-900);
-  a {
-    color: var(--text-50);
-  }
-}
-.fc-daygrid-day-number {
-  color: black;
-  font-weight: bold;
-}
-.fc-daygrid-day-frame {
-  background-color: var(--background-600);
+  overflow: hidden !important;
+  width: 700px;
+  height: 560px;
+  margin: 20px auto;
+  background: var(--primary-400);
+  border-radius: 12px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  color: #2c3e50;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
 }
 
-.fc-daygrid-day-events {
-  display: none;
+/* Toolbar */
+.C-calendario .fc-toolbar {
+  padding: 12px 20px;
+  background: #f5f7fa;
+  border-bottom: 1px solid #e1e4e8;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Título (mes y año) */
+.C-calendario .fc-toolbar-title {
+  font-weight: 700;
+  font-size: 22px;
+  color: #415263;
+  letter-spacing: 0.03em;
+}
+
+/* Botones de navegación */
+.C-calendario .fc-button {
+  background: #2980b9;
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  font-size: 12px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  box-shadow: 0 3px 8px rgba(41, 128, 185, 0.4);
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  user-select: none;
+}
+
+.C-calendario .fc-button:hover,
+.C-calendario .fc-button:focus {
+  background: #1c5980;
+  box-shadow: 0 6px 16px rgba(28, 89, 128, 0.6);
+  outline: none;
+}
+
+.C-calendario .fc-button:disabled {
+  background: #95a5a6;
+  cursor: default;
+  box-shadow: none;
+}
+
+/* Encabezado de días */
+.C-calendario .fc-col-header-cell-cushion {
+  font-weight: 600;
+  font-size: 14px;
+  color: rgb(0, 0, 0) ;
+  padding: 10px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  user-select: none;
+}
+
+/* Celdas diarias */
+.C-calendario .fc-daygrid-day-frame {
+  min-height: 85px;
+  padding: 8px 8px 8px 10px;
+  border-radius: 8px;
+  transition: background-color 0.25s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+/* hover de selecionar la fecha */
+.C-calendario .fc-daygrid-day-frame:hover {
+  background-color: #f0f4f8;
+  box-shadow: inset 0 0 8px rgba(41, 128, 185, 0.15);
+}
+
+/* Día actual */
+.C-calendario .fc-day-today {
+  background-color: #d6eaf8 !important;
+  border-radius: 14px !important;
+  box-shadow: 0 0 10px 3px #000000;
+  font-weight: 700;
+  color: #273038;
+}
+
+/* Eventos */
+.C-calendario .fc-event {
+  background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+  border: none;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(39, 174, 96, 0.7);
+  color: #fff !important;
+  font-weight: 600;
+  font-size: 12px;
+  padding: 4px 10px;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  user-select: none;
+}
+
+.C-calendario .fc-event:hover {
+  background: linear-gradient(135deg, #219150 0%, #27ae60 100%);
+  box-shadow: 0 4px 12px rgba(33, 145, 80, 0.8);
+}
+
+/* Scroll de eventos si hay muchos */
+.C-calendario .fc-daygrid-event-harness {
+  max-height: 24px;
+  overflow: hidden !important;
+}
+
+/* Scroll horizontal oculto para evitar scroll en móviles */
+.C-calendario {
+  overflow-x: hidden !important;
+}
+
+/* Opcional: botón 'Today' destacado */
+.C-calendario .fc-button-today {
+  background: #e67e22;
+  box-shadow: 0 3px 8px rgba(230, 126, 34, 0.6);
+}
+
+.C-calendario .fc-button-today:hover {
+  background: #cf711a;
+  box-shadow: 0 6px 16px rgba(207, 113, 26, 0.8);
+}
+
+/* Ajustes para evitar selección de texto accidental */
+.C-calendario .fc-daygrid-day-frame,
+.C-calendario .fc-event {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Elimina hover en toda la fila o celda */
+.C-calendario .fc-daygrid-day:hover,
+.C-calendario .fc-scrollgrid-section:hover,
+.C-calendario .fc-scrollgrid-sync-table tr:hover,
+.C-calendario .fc-scrollgrid-sync-table td:hover {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  cursor: default !important;
+}
+.C-calendario .fc-daygrid-day-number {
+  color: #000000; /* ← Cambia este valor por el color que quieras */
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* Quitar color de fondo alterno de filas (striping) */
+.C-calendario .fc-scrollgrid-sync-table tr:nth-child(even),
+.C-calendario .fc-scrollgrid-sync-table tr:nth-child(odd) {
+  background-color: transparent !important;
 }

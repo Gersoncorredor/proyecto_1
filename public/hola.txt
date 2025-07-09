@@ -1,40 +1,195 @@
-import { useState, useEffect } from "react";
-import { Eclipse, SunMoon } from "lucide-react";
-import styles from "../barra.module.css";
+/* Contenedor principal */
+.C-calendario {
+  overflow-y: hidden; /* evita scroll horizontal */
+}
 
-export const Thema = ({ menu }) => {
-  const [mode, setMode] = useState(() => {
-    const saved = localStorage.getItem("theme");
-    if (saved) return saved;
-    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-  });
 
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", mode);
-  }, [mode]);
+.C-calendario {
+  width: 900px;
+  height: 720px;
+  margin: 40px auto;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: #2c3e50;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+}
 
-  const toggleMode = () => {
-    setMode((prev) => {
-      const newMode = prev === "dark" ? "light" : "dark";
-      localStorage.setItem("theme", newMode);
-      return newMode;
-    });
-  };
+/* Toolbar */
+.C-calendario .fc-toolbar {
+  padding: 20px 30px;
+  background: #f5f7fa;
+  border-bottom: 1px solid #e1e4e8;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-  return (
-    <div className={styles.modoOscuro}>
-      <div className={styles.info}>
-        {mode === "dark" && <Eclipse size={20} className={styles.iconMode} />}
-        {mode === "light" && <SunMoon size={20} className={styles.iconMode} />}
-        <span className={menu ? styles.oculto : ""}>{mode}</span>
-      </div>
-      <div className={styles.switch} onClick={toggleMode}>
-        <div className={styles.base}>
-          <div
-            className={`${styles.circulo} ${mode === "dark" ? styles.prendido : ""}`}
-          />
-        </div>
-      </div>
-    </div>
-  );
-};
+/* Título (mes y año) */
+.C-calendario .fc-toolbar-title {
+  font-weight: 700;
+  font-size: 28px;
+  color: #34495e;
+  letter-spacing: 0.03em;
+}
+
+/* Botones de navegación */
+.C-calendario .fc-button {
+  background: #2980b9;
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0 3px 8px rgba(41, 128, 185, 0.4);
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  user-select: none;
+}
+
+.C-calendario .fc-button:hover,
+.C-calendario .fc-button:focus {
+  background: #1c5980;
+  box-shadow: 0 6px 16px rgba(28, 89, 128, 0.6);
+  outline: none;
+}
+
+.C-calendario .fc-button:disabled {
+  background: #95a5a6;
+  cursor: default;
+  box-shadow: none;
+}
+
+/* Encabezado de días */
+.C-calendario .fc-col-header-cell-cushion {
+  font-weight: 600;
+  font-size: 16px;
+  color: #7f8c8d;
+  padding: 14px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  user-select: none;
+}
+
+/* Celdas diarias */
+.C-calendario .fc-daygrid-day-frame {
+  min-height: 110px;
+  padding: 12px 10px 10px 12px;
+  border-radius: 10px;
+  transition: background-color 0.25s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.C-calendario .fc-daygrid-day-frame:hover {
+  background-color: #f0f4f8;
+  box-shadow: inset 0 0 8px rgba(41, 128, 185, 0.15);
+}
+
+/* Día actual */
+.C-calendario .fc-day-today {
+  background-color: #d6eaf8 !important;
+  border-radius: 14px !important;
+  box-shadow: 0 0 10px 3px #2980b9;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+/* Días fuera del mes */
+.C-calendario .fc-day-other {
+  color: #bdc3c7;
+  background: #fafafa;
+}
+
+/* Eventos */
+.C-calendario .fc-event {
+  background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(39, 174, 96, 0.7);
+  color: #fff !important;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 6px 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  user-select: none;
+}
+
+.C-calendario .fc-event:hover {
+  background: linear-gradient(135deg, #219150 0%, #27ae60 100%);
+  box-shadow: 0 4px 12px rgba(33, 145, 80, 0.8);
+}
+
+/* Scroll de eventos si hay muchos */
+.C-calendario .fc-daygrid-event-harness {
+  max-height: 28px;
+  overflow: hidden;
+}
+
+/* Scroll horizontal oculto para evitar scroll en móviles */
+.C-calendario {
+  overflow-x: hidden;
+}
+
+/* Opcional: botón 'Today' destacado */
+.C-calendario .fc-button-today {
+  background: #e67e22;
+  box-shadow: 0 3px 8px rgba(230, 126, 34, 0.6);
+}
+
+.C-calendario .fc-button-today:hover {
+  background: #cf711a;
+  box-shadow: 0 6px 16px rgba(207, 113, 26, 0.8);
+}
+
+/* Ajustes para evitar selección de texto accidental */
+.C-calendario .fc-daygrid-day-frame,
+.C-calendario .fc-event {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/*
+
+.fc {
+  padding: 1rem;
+  border-radius: 4%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-family: "Times New Roman", Times, serif;
+  background-color: var(--background-500);
+}
+
+.fc .fc-button-primary {
+  background-color: var(--background-500);
+}
+.fc-col-header {
+  background-color: var(--primary-900);
+  a {
+    color: var(--text-50);
+  }
+}
+.fc-daygrid-day-number {
+  color: black;
+  font-weight: bold;
+}
+.fc-daygrid-day-frame {
+  background-color: var(--background-600);
+}
+
+.fc-daygrid-day-events {
+  display: none;
+}
+ */

@@ -3,8 +3,8 @@
   display: flex;
 }
 .homebtn {
-  color: var(--text-50);
   background-color: var(--primary-600);
+  color: var(--text-50);
   margin: 10px;
 }
 .homebtn:hover {

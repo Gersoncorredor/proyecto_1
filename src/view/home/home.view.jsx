@@ -36,7 +36,9 @@ function Home() {
   };
   return (
     <div className={styles.home}>
+      <div className={styles.calendario}>
       <Calendario handleSelect={handleSelect} />
+      </div>
       <Modal isOpen={open} onClose={onClose} className={styles.modalHome}>
         <h2>Agendar</h2>
         <strong>Fecha: {fecha}</strong>
