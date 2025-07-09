@@ -6,9 +6,9 @@ import { getUserId, updateUser } from "../../services/user.js";
 
 function Profile() {
   const [imagePreview, setImagePreview] = useState(null);
-  
+
   const [isDisabled, setIsDisabled] = useState(true);
-  const id = 1
+  const id = 1;
   const [formData, setFormData] = useState({
     id: 0,
     name: "",
@@ -26,8 +26,8 @@ function Profile() {
   };
 
   const handleEdit = () => {
-    if (isDisabled) { 
-      setIsDisabled(false); 
+    if (isDisabled) {
+      setIsDisabled(false);
       return;
     }
 
@@ -45,32 +45,39 @@ function Profile() {
     }
   };
 
-
   useEffect(() => {
     setImagePreview("../../../public/Avatares/id1.jpg");
     setOriginData(formData);
-     getUserId(id).then((response) => {
+    getUserId(id).then((response) => {
       setOriginData(response.data);
       setFormData(response.data);
     });
-
   }, []);
 
   return (
-    <div className={styles.profileContainer}>
+    <>
       <h1>Perfil</h1>
       <div className={styles.profile}>
-        <div className={styles.iconProfile}>
-          {imagePreview ? (
-            <img
-              className={styles.iconImagen}
-              src={imagePreview}
-              alt="Preview"
-            />
-          ) : (
-            <UserRoundPen size={100} />
-          )}
+        <div className={styles.contanierProfile}>
+          <div className={styles.iconProfile}>
+            {imagePreview ? (
+              <img
+                className={styles.iconImagen}
+                src={imagePreview}
+                alt="Preview"
+              />
+            ) : (
+              <UserRoundPen size={100} />
+            )}
+          </div>
+
+          <span>
+            {formData.name}
+            {formData.lastName}
+          </span>
+          <span>{formData.email}</span>
         </div>
+        
         <div className={styles.profileContent}>
           <h2>Datos</h2>
           <label htmlFor="name" className={styles.inputGroup}>
@@ -114,7 +121,7 @@ function Profile() {
           </button>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
