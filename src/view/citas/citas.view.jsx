@@ -61,10 +61,10 @@ const Citas = () => {
     { header: "Usuario", accessor: "usuario" },
   ];
   return (
-    <div className={styles.container}>
+    <>
       <h1>Citas</h1>
       <CTable data={citas} columns={columnas} />
-    </div>
+    </>
   );
 };
 

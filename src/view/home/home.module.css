@@ -1,16 +1,11 @@
 .home {
-  margin-left: 100px;
-  padding: 20px;
-  width: 90vw;
   height: 100vh;
   display: flex;
-  overflow: hidden;
 }
 .homebtn {
   color: var(--text-50);
   background-color: var(--primary-600);
   margin: 10px;
-  transition: all 0.5s ease;
 }
 .homebtn:hover {
   background-color: var(--primary-500);

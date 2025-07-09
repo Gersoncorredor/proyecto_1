@@ -4,12 +4,8 @@
   box-sizing: border-box;
 }
 
-.bBody {
-  height: 100vh;
-  width: 100%;
-}
 /* ---MENU--- */
-.menu{
+.menu {
   position: fixed;
   width: 50px;
   height: 50px;
@@ -23,22 +19,25 @@
   color: var(--primary-50);
   right: 15px;
   top: 15px;
+  z-index: 100;
 }
 
 /* ---BARRA LATERAL--- */
 .barraLateral {
+  position: fixed;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   width: 250px;
   height: 100%;
   padding: 20px 5px;
-  background-color: var(--background-200);
+  background-color: var(--background-100);
   overflow: hidden;
-  transition: width 0.5s ease, background-color 0.2s ease;
+  transition: width 0.5s ease, background-color 0.2s ease, left 0.5s ease;
+  z-index: 50;
 }
 
-.miniBarraLateral { 
+.miniBarraLateral {
   width: 80px;
 }
 .barraLateral span {
@@ -91,20 +90,19 @@
 }
 
 /* -MENU NAVEGACION */
-.barraLateral .navegacion{
-   height: 100%;
-   overflow-y:auto;
-   overflow-x: hidden ;
-
+.barraLateral .navegacion {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
-.barraLateral .navegacion::-webkit-scrollbar{
-width: 5px;
+.barraLateral .navegacion::-webkit-scrollbar {
+  width: 5px;
 }
-.barraLateral .navegacion::-webkit-scrollbar-thumb{
+.barraLateral .navegacion::-webkit-scrollbar-thumb {
   background-color: aqua;
   border-radius: 5px;
 }
-.barraLateral .navegacion::-webkit-scrollbar-thumb:hover{
+.barraLateral .navegacion::-webkit-scrollbar-thumb:hover {
   background-color: red;
 }
 .barraLateral .navegacion li {
@@ -194,12 +192,12 @@ width: 5px;
 }
 
 /* --USUARIO-- */
-.barraLateral .usuario{
-   width: 100%;
-   display: flex;
+.barraLateral .usuario {
+  width: 100%;
+  display: flex;
 }
 
-.barraLateral .usuario img{
+.barraLateral .usuario img {
   width: 70px;
   min-width: 70px;
   border-radius: 10px;
@@ -223,16 +221,33 @@ width: 5px;
 
 .barraLateral .usuario .name {
   font-size: 15px;
-  font-weight: 600;  
+  font-weight: 600;
 }
 
 .barraLateral .usuario .email {
   font-size: 13px;
-} 
+}
 
 .barraLateral .usuario .icon {
- width: 20px;
- height: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+/* ---main--- */
+
+.activo a{
+  background-color: var(--background-300);
+  color: var(--text-950) !important;
+}
+
+.main {
+  margin-left: 250px;
+  padding: 20px;
+  transition: margin-left 0.5s ease;
+}
+
+.main.minMain {
+  margin-left: 80px;
 }
 
 @media (max-height: 600px) {
@@ -240,14 +255,27 @@ width: 5px;
     margin-bottom: 5px;
   }
 
-  .barraLateral .modoOscuro{
+  .barraLateral .modoOscuro {
     margin-bottom: 3px;
   }
 }
 
 @media (max-width: 600px) {
-  .barraLateral{
-    position: absolute;
+  .barraLateral {
+    position: fixed;
     left: -250px;
+  }
+  .maxBarraLateral {
+    left: 0;
+  }
+
+  .menu {
+    display: flex;
+  }
+  .main {
+    margin-left: 0;
+  }
+  .main.minMain {
+    margin-left: 0;
   }
 }
