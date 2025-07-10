@@ -58,7 +58,6 @@
   --accent-800: #243342;
   --accent-900: #121921;
   --accent-950: #090d10;
-
 }
 :root[data-theme="dark"] {
   --text-50: #09100d;
@@ -120,22 +119,16 @@
   --accent-800: #bdccdb;
   --accent-900: #dee5ed;
   --accent-950: #eff2f6;
-
 }
 
-
-body,html,#root  {
+body,
+html,
+#root {
   background-color: var(--background-50);
   color: var(--text-950);
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
 
 

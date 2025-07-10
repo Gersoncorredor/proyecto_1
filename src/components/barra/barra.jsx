@@ -86,17 +86,6 @@ const Barra = ({ menu, setMenu, miniMenu, setMiniMenu, children }) => {
                 <span className={menu ? styles.oculto : ""}>Citas</span>
               </a>
             </li>
-
-            <li
-              className={`${
-                location.pathname === "/perfil" ? styles.activo : ""
-              }`}
-            >
-              <a onClick={() => navigate("/perfil")}>
-                <CircleUser size={20} className={styles.icon} />
-                <span className={menu ? styles.oculto : ""}>Perfil</span>
-              </a>
-            </li>
           </ul>
         </nav>
         <div>

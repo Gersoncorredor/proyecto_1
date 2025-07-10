@@ -3,10 +3,9 @@ import { UserRoundPen } from "lucide-react";
 import styles from "./profile.module.css";
 import { useState, useEffect } from "react";
 import { getUserId, updateUser } from "../../services/user.js";
+import UseProfile from "../../components/UserProfile/UserProfile.jsx";
 
 function Profile() {
-  const [imagePreview, setImagePreview] = useState(null);
-
   const [isDisabled, setIsDisabled] = useState(true);
   const id = 1;
   const [formData, setFormData] = useState({
@@ -16,13 +15,17 @@ function Profile() {
     email: "",
   });
   const [originData, setOriginData] = useState("");
+  const [isModified, setIsModified] = useState(false);
+
+  const renderButtonLabel  = isDisabled ? "Ediatar" : "Guardar cambios"
 
   const handleSubmit = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    setFormData((prevData) => {
+      const updateData = { ...prevData, [name]: value };
+      setIsModified(JSON.stringify(updateData) !== JSON.stringify(originData));
+      return updateData;
+    });
   };
 
   const handleEdit = () => {
@@ -31,14 +34,13 @@ function Profile() {
       return;
     }
 
-    if (JSON.stringify(formData) !== JSON.stringify(originData)) {
-      const confirm = window.confirm(
-        "Los datos han cambiado. ¿Deseas continuar?"
-      );
+    if (isModified) {
+      const confirm = window.confirm("Los datos han cambiado. ¿Deseas continuar?");
       if (!confirm) return;
+
       updateUser(id, formData).then((response) => {
-        setOriginData(formData);
         setIsDisabled(true);
+        setOriginData(formData);
       });
     } else {
       setIsDisabled(true);
@@ -46,10 +48,7 @@ function Profile() {
   };
 
   useEffect(() => {
-    setImagePreview("../../../public/Avatares/id1.jpg");
-    setOriginData(formData);
     getUserId(id).then((response) => {
-      setOriginData(response.data);
       setFormData(response.data);
     });
   }, []);
@@ -60,24 +59,12 @@ function Profile() {
       <div className={styles.profile}>
         <div className={styles.contanierProfile}>
           <div className={styles.iconProfile}>
-            {imagePreview ? (
-              <img
-                className={styles.iconImagen}
-                src={imagePreview}
-                alt="Preview"
-              />
-            ) : (
-              <UserRoundPen size={100} />
-            )}
+            <UseProfile />
           </div>
-
-          <span>
-            {formData.name}
-            {formData.lastName}
-          </span>
+          <span>{`${formData.name} ${formData.lastName}`}</span>
           <span>{formData.email}</span>
         </div>
-        
+
         <div className={styles.profileContent}>
           <h2>Datos</h2>
           <label htmlFor="name" className={styles.inputGroup}>
@@ -117,7 +104,7 @@ function Profile() {
             <span>Correo:</span>
           </label>
           <button onClick={handleEdit}>
-            {isDisabled ? "Editar" : "Guardar"}
+            {renderButtonLabel}
           </button>
         </div>
       </div>

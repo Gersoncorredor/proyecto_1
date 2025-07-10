@@ -2,66 +2,96 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 40px;
+  gap: 20px;
   width: 100%;
   max-width: 900px;
+  flex-wrap: wrap;
 }
 
-
- .profile .contanierProfile{
+/* ---------------------> logo de perfil */
+.profile .contanierProfile {
   border: 3px solid red;
   border-radius: 5%;
   background-color: white;
-  height: 100%;
+  width: auto;
+  height: auto;
   display: flex;
+  padding: 20px;
   gap: 5px;
   flex-direction: column;
   align-items: center;
 }
 
-.profile .profileContent{
-  border: 3px solid red;
-  background-color: white;
-  gap: 3px;
-  height: 90%;
+.profile .contanierProfile span {
+  &:first-of-type {
+    color: black;
+    font-size: 1.5rem;
+  }
+  &:last-of-type {
+    color: rgb(63, 63, 63);
+  }
 }
 
-
-.iconProfile {
-  width: 300px;
-  height: 300px;
+.profile .contanierProfile .iconProfile {
+  width: 15rem;
+  height: 15rem;
   border-radius: 50%;
-  border: 2px solid var(--background-950);
+  border: 2px solid black;
 }
 
-.iconImagen {
+.profile .contanierProfile .iconProfile img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
 }
 
-.iconProfile svg {
+.profile .contanierProfile .iconProfile svg {
   width: 80%;
   height: 80%;
+  color: black;
   object-fit: cover;
-  margin-left: 42px;
+  margin-left: 35px;
 }
+
+/* ----------------------> contenido de los datos */
+.profile .profileContent {
+  border: 3px solid red;
+  border-radius: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  gap: 3px;
+  height: 90%;
+  width: 50%; 
+}
+
+.profile .profileContent h2 {
+  color: black;
+  margin-bottom: 20px;
+}
+.profile .profileContent .inputGroup span,
+.profile .profileContent .inputGroup input {
+  color: black;
+}
+
+/* ---------------------------> istilos inputs  */
 .inputGroup {
   position: relative;
   display: flex;
   flex-direction: column;
   margin-bottom: 30px;
+  width: 95%;
 
   input {
     color: var(--text-950);
-    width: 300px;
+    width: 100%;
     height: 32px;
     font-size: 16px;
     border: none;
     outline: none;
     position: relative;
-
     background: linear-gradient(90deg, var(--primary-800), var(--primary-800))
         center bottom/0 3px no-repeat,
       linear-gradient(90deg, var(--primary-300), var(--primary-400)) center
