@@ -20,11 +20,11 @@ const CTable = ({ data, columns }) => {
 
   return (
     <>
-      <table className={styles.table}>
-        <thead className={styles.thead}>
-          <tr className={styles.tr}>
+      <table className={styles.tabla}>
+        <thead>
+          <tr>
             {columns.map((col) => (
-              <th key={col.accessor} className={styles.th}>
+              <th key={col.accessor}>
                 {col.header}
               </th>
             ))}
@@ -32,10 +32,10 @@ const CTable = ({ data, columns }) => {
         </thead>
         <tbody>
           {currentRows.map((row, id) => (
-            <tr key={id} className={styles.tr}>
+            <tr key={id}>
               {columns.map((col) => {
                 return (
-                <td key={col.accessor} className={styles.td}>
+                <td key={col.accessor}>
                   {row[col.accessor]}
                 </td>
               )})}
