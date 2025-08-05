@@ -6,7 +6,7 @@ export const Thema = ({ menu }) => {
   const [mode, setMode] = useState(() => {
     const saved = localStorage.getItem("theme");
     if (saved) return saved;
-    window.matchMedia("(prefers-color-scheme: dark)").matches
+   return window.matchMedia("(prefers-color-scheme: dark)").matches
       ? "dark"
       : "light";
   });

@@ -6,7 +6,7 @@ const UseProfile = () => {
 
   useEffect(() => {
     const foto = localStorage.getItem("foto");
-    setImagePreview(`../../../public/Avatares/id1.jpg`);
+    setImagePreview(`/Avatares/id1.jpg`);
   }, []);
   return (
     <>

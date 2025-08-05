@@ -1,19 +1,21 @@
 # Imagen base 
-FROM node:22
+FROM node:22 as build
 
 # Crear carpeta proyecto1
-WORKDIR /proyecto1
+WORKDIR /app
 
-# Copiar archivos de dependecias
-COPY package.json ./
+# Copiar archivos 
+COPY . .
 
 # Instalar dependecias 
 RUN npm install
 
-# Copiar el resto del codigo
-COPY . .
+# Copila el codigo
 RUN npm run build
+# Copiar el resto del codigo
+FROM nginx:alpine
+COPY --from=build /app/dist /usr/share/nginx/html
 
 
-EXPOSE 5173
-CMD ["npm","run","dev"]
+EXPOSE 80
+CMD ["nginx","-g","daemon off;"]
