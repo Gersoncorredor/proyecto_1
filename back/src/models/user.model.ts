@@ -1,0 +1,163 @@
+import { Model, DataTypes } from "sequelize";
+import type { Optional } from "sequelize";
+import sequelize from "../config/DB.ts";
+import dotenv from "dotenv";
+dotenv.config();
+
+// 1. Definir los atributos del modelo
+export interface UserAttributes {
+  numero_documento: number;
+  id_rol: number;
+  id_tipo_identificacion: number;
+  nombres: string;
+  apellidos: string;
+  id_genero: number;
+  correo: string;
+  telefono?: string;
+  clave: string;
+  fecha_nacimiento?: Date;
+  direccion?: string;
+  id_estado_usuario?: number;
+  codigo_reset?: string | null;
+  expira_reset?: Date | null;
+  intentos_fallidos: number;
+  bloqueado_hasta?: Date | null;
+  fecha_creacion?: Date;
+  fecha_actualizada?: Date;
+}
+
+// 2. Campos opcionales al crear un nuevo usuario
+type UserCreationAttributes = Optional<
+  UserAttributes,
+  | "numero_documento"
+  | "id_rol"
+  | "id_tipo_identificacion"
+  | "telefono"
+  | "fecha_nacimiento"
+  | "direccion"
+  | "codigo_reset"
+  | "expira_reset"
+  | "intentos_fallidos"
+  | "bloqueado_hasta"
+  | "fecha_creacion"
+  | "fecha_actualizada"
+  | "id_estado_usuario"
+>;
+
+// 3. Clase User extendida de Sequelize
+class User
+  extends Model<UserAttributes, UserCreationAttributes>
+  implements UserAttributes
+{
+  public numero_documento!: number;
+  public id_rol!: number;
+  public id_tipo_identificacion!: number;
+  public nombres!: string;
+  public apellidos!: string;
+  public id_genero!: number;
+  public correo!: string;
+  public telefono?: string;
+  public clave!: string;
+  public fecha_nacimiento?: Date;
+  public direccion?: string;
+  public id_estado_usuario!: number;
+  public codigo_reset?: string | null;
+  public expira_reset?: Date | null;
+  public intentos_fallidos!: number;
+  public bloqueado_hasta?: Date | null;
+  public fecha_creacion?: Date;
+  public fecha_actualizada?: Date;
+}
+
+// 4. Definir el modelo Sequelize
+User.init(
+  {
+    numero_documento: {
+      type: DataTypes.BIGINT,
+      primaryKey: true,
+      allowNull: false,
+    },
+    id_rol: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 3,
+    },
+    id_tipo_identificacion: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    nombres: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+    },
+    apellidos: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+    },
+    id_genero: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    correo: {
+      type: DataTypes.STRING(60),
+      allowNull: false,
+      unique: true,
+    },
+    telefono: {
+      type: DataTypes.STRING(10),
+      allowNull: true,
+    },
+    clave: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+    },
+    fecha_nacimiento: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    direccion: {
+      type: DataTypes.STRING(150),
+      allowNull: true,
+    },
+    id_estado_usuario: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 1,
+    },
+    codigo_reset: {
+      type: DataTypes.STRING(10),
+      allowNull: true,
+    },
+    expira_reset: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    intentos_fallidos: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
+    },
+    bloqueado_hasta: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    fecha_creacion: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: DataTypes.NOW,
+    },
+    fecha_actualizada: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: DataTypes.NOW,
+    },
+  },
+  {
+    sequelize,
+    modelName: "User",
+    tableName: "usuarios",
+    timestamps: false,
+  }
+);
+
+export default User;
